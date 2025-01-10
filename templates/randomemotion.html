@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+Random Emotion Challenge
+{% endblock %}
+{% block body %}
+
+    <div style="width: 50%; font-size: 3vh; margin-left: auto; margin-right:auto; margin-top: 5%; margin-bottom: 5%; text-align: center; color: #e6e6e6;">
+    <p style="padding-bottom: 3vh; font-size: 4vh;">Random Emotion Portrayal Challenge</p>
+        In this gamemode, the app will request that you portray a random emotion of its choice! Do your best to portray it and either
+        upload an existing pic or take one live using the respective buttons. The AI will then do its best to rate your portrayal
+        and issue its verdict!
+    </div>
+    <div style="margin-bottom: 5vh; font-size: 3vh; text-align:center;">
+        Try to portray:<br>{{ emotion }}
+    </div>
+    <div style="text-align:center; margin-bottom: 5vh;">
+        <a class="buttonsubmit" href="{{ url_for('randomemotion') }}">Reload Emotion</a>
+    </div>
+    <form action="#" method="POST" enctype="multipart/form-data">
+        <div style="display:flex; justify-content: safe center; flex-wrap: wrap;">
+            <label for="picupload" class="buttonsubmit">
+                Upload Picture
+            </label>
+            <input id="emotioninput" name="emotioninput" type="hidden" value="{{ emotion }}">
+            <input id="picupload" style="display:none;" type="file" name="pic" id="pic" required>
+            <p style="padding-left: 1vw; padding-right: 1vw;"></p>
+            <button class="buttonsubmit" type="submit" value="submit">Submit</button>
+        </div>
+    </form>
+{% endblock %}

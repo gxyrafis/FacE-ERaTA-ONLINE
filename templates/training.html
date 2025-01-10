@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+Training Mode
+{% endblock %}
+{% block body %}
+
+    <div style="width: 50%; font-size: 3vh; margin-left: auto; margin-right:auto; margin-top: 5%; margin-bottom: 5%; text-align: center; color: #e6e6e6;">
+    <p style="padding-bottom: 3vh; font-size: 4vh;">Training Mode</p>
+    Welcome to the training mode! In this mode, the app will not request an emotion at all.
+    Instead, you are free to take any expression that you like and either take a picture using your webcam
+    or upload existing ones. The AI classifier will then take this pictures and tell you what emotion it thought
+    you were trying to display and what the accuracy was.
+</div>
+<form action="#" method="POST" enctype="multipart/form-data">
+    <div style="display:flex; justify-content: safe center; flex-wrap: wrap;">
+        <label for="picupload" class="buttonsubmit">
+            Upload Picture
+        </label>
+        <input id="picupload" style="display:none;" type="file" name="pic" id="pic" required>
+        <p style="padding-left: 1vw; padding-right: 1vw;"></p>
+        <button class="buttonsubmit" type="submit" value="submit">Submit</button>
+    </div>
+
+</form>
+{% endblock %}

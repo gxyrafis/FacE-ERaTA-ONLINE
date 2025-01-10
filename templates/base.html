@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+    {% block head %} {% endblock %}
+</head>
+<body>
+    <header>
+        <div style="font-size: 7vh; color: #e6e6e6; text-align: center;">FacE-ERaTA <i>ONLINE</i></div>
+        <nav>
+            <a class="navbutton" href="{{ url_for('index') }}">Home</a>
+            <a class="navbutton" href="{{ url_for('randomemotion') }}">Random Emotion</a>
+            <a class="navbutton" href="{{ url_for('useremotion') }}">User Picked Emotion</a>
+            <a class="navbutton" href="{{ url_for('training') }}">Training</a>
+        </nav>
+    </header>
+    {% block body %} {% endblock %}
+</body>
+</html>

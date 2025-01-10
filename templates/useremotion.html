@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+User Picked Emotion Challenge
+{% endblock %}
+{% block body %}
+
+    <div style="width: 50%; font-size: 3vh; margin-left: auto; margin-right:auto; margin-top: 5%; margin-bottom: 5%; text-align: center; color: #e6e6e6;">
+    <p style="padding-bottom: 3vh; font-size: 4vh;">User chosen emotion portrayal</p>
+        In this gamemode you are allowed to try and portray an emotion of your choice.
+        Select an emotion to portray down below and then either upload a picture or take a picture live
+        where you express said emotion. The AI judge will then rate your attempt once you press 'Submit'.
+    </div>
+    <form action="#" method="POST" enctype="multipart/form-data">
+        <div style="text-align: center; font-size: 3vh; padding-bottom: 3vh;">Pick an emotion:
+            <select name="emotion" id="emotion" style="padding-top: 0.5vh; padding-bottom: 0.5vh; padding-left: 0.5vh; padding-right: 0.5vh; font-size: 2.5vh;">
+                <option value="{{ emotions[0] }}"> {{ emotions[0] }}</option>
+                <option value="{{ emotions[1] }}"> {{ emotions[1] }}</option>
+                <option value="{{ emotions[2] }}"> {{ emotions[2] }}</option>
+                <option value="{{ emotions[3] }}"> {{ emotions[3] }}</option>
+                <option value="{{ emotions[4] }}"> {{ emotions[4] }}</option>
+                <option value="{{ emotions[5] }}"> {{ emotions[5] }}</option>
+            </select>
+        </div>
+
+        <br>
+        <div style="display:flex; justify-content: safe center; flex-wrap: wrap;">
+            <label for="picupload" class="buttonsubmit">
+                Upload Picture
+            </label>
+            <input id="picupload" style="display:none;" type="file" name="pic" id="pic" required>
+            <p style="padding-left: 1vw; padding-right: 1vw;"></p>
+            <button class="buttonsubmit" type="submit" value="submit">Submit</button>
+        </div>
+    </form>
+{% endblock %}
