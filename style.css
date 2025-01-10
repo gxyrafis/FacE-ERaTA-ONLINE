@@ -1,0 +1,57 @@
+:root{
+    --backgroundcol: #327fb3;
+    --maincol: #e6e6e6;
+}
+
+html {
+    background-color: var(--backgroundcol);
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: safe center;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+.navbutton {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    padding-right: 2vw;
+    padding-left: 2vw;
+    color: var(--maincol);
+    font-size: 2.5vh;
+    text-decoration: none;
+    text-transform:none;
+}
+
+.navbutton:hover{
+    color: var(--backgroundcol);
+    background-color: var(--maincol);
+    text-decoration: none;
+    text-transform:none;
+}
+
+.buttonsubmit{
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    padding-right: 1vw;
+    padding-left: 1vw;
+    color: black;
+    background-color: var(--maincol);
+    font-size: 2.5vh;
+    text-decoration: none;
+    text-transform:none;
+    border-radius: 25px;
+    border: none;
+}
+
+.buttonsubmit:hover{
+    border: none;
+    color: var(--backgroundcol);
+    background-color: var(--maincol);
+    text-decoration: none;
+    text-transform:none;
+}
