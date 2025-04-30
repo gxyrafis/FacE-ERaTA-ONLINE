@@ -1,3 +1,7 @@
+import urllib
+
+import cv2
+import numpy as np
 import pandas as pd
 from cv2 import VideoCapture
 from deepface import DeepFace
@@ -51,11 +55,11 @@ def emotionAnalysis(picture, emotion, retinaface):
     else:
         emotion = emotionWordSwitch(emotion)
     accuracy = emotion_analysis[0]["emotion"][emotion]
-    fig = makeStarChart(emotion_analysis[0])
+    #fig = makeStarChart(emotion_analysis[0])
     if emotion_analysis[0]["dominant_emotion"] == emotion:
-        return ["Success" , accuracy, emotionWordSwitchR(emotion_analysis[0]["dominant_emotion"]), fig]
+        return ["Success" , accuracy, emotionWordSwitchR(emotion_analysis[0]["dominant_emotion"]), emotion_analysis[0]["emotion"]]
     else:
-        return ["Failure", accuracy, emotionWordSwitchR(emotion_analysis[0]["dominant_emotion"]), fig]
+        return ["Failure", accuracy, emotionWordSwitchR(emotion_analysis[0]["dominant_emotion"]), emotion_analysis[0]["emotion"]]
 
 def checkCamValidity(source):
     cam = VideoCapture(source)
