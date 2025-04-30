@@ -4,6 +4,14 @@
 }
 
 html {
+    background-color: white;
+}
+
+body{
+    margin: 0;
+}
+
+header {
     background-color: var(--backgroundcol);
 }
 
@@ -39,19 +47,32 @@ nav {
     padding-bottom: 1vh;
     padding-right: 1vw;
     padding-left: 1vw;
-    color: black;
-    background-color: var(--maincol);
+    color: white;
+    background-color: var(--backgroundcol);
     font-size: 2.5vh;
     text-decoration: none;
     text-transform:none;
-    border-radius: 25px;
-    border: none;
+    border-radius: 10px;
+    border: solid;
+    border-color: var(--backgroundcol);
 }
 
 .buttonsubmit:hover{
-    border: none;
     color: var(--backgroundcol);
-    background-color: var(--maincol);
+    background-color: white;
     text-decoration: none;
     text-transform:none;
+}
+
+.container-video {
+	margin: 0;
+	width: 500px;
+	height: 375px;
+	border: 10px #333 solid;
+}
+
+#videoElement {
+	width: 500px;
+	height: 375px;
+	background-color: #666;
 }
