@@ -13,6 +13,9 @@ from UtilityFunctions import emotionAnalysis
 
 app = Flask(__name__)
 
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
+app.config['MAX_FORM_MEMORY_SIZE'] = 50 * 1024 * 1024
+
 @app.route("/", methods=["POST", "GET"])
 def index():
     return render_template("index.html")
@@ -29,7 +32,7 @@ def training():
             try:
                 tmpurl = flask.request.values['backendimage'].split(';')[1].split(',')[1]
             except:
-                return render_template("training.html", result=None, message=None, picname=None,
+                return render_template("training.html", result=None, message=None, picname=None, errormessage = None,
                                        success=None,
                                        stats={'happy': 0, 'angry': 0, 'sad': 0, 'fear': 0, 'surprise': 0, 'disgust': 0,
                                               'neutral': 0})
@@ -45,7 +48,15 @@ def training():
         try:
             results = emotionAnalysis(path, "T", False)
         except:
-            results = emotionAnalysis(path, "T", True)
+            try:
+                results = emotionAnalysis(path, "T", True)
+            except:
+                errormsg = "Error: A face could not be identified in the provided image. Please use a different one."
+                return render_template("training.html", result=None, message=None, picname=None, errormessage = errormsg,
+                                       success=None,
+                                       stats={'happy': 0, 'angry': 0, 'sad': 0, 'fear': 0, 'surprise': 0, 'disgust': 0,
+                                              'neutral': 0})
+
         #results[3].write_image("static/starchart" + uid + ".png")
         size = 700, 700
         #chart = Image.open("static/starchart" + uid  + ".png")  # Convert image into 500x500
@@ -62,9 +73,9 @@ def training():
                 ".JPEG", ".png")
             im.save(new_image_path)
         message = str(round(results[1], 2)) + "%"
-        return render_template("training.html",result = results[2], message = message, picname = "/static/" + picname, success = results[0], stats = results[3])
+        return render_template("training.html",result = results[2], message = message, picname = "/static/" + picname, errormessage=None, success = results[0], stats = results[3])
     else:
-        return render_template("training.html", result=None, message=None, picname=None,
+        return render_template("training.html", result=None, message=None, picname=None, errormessage = None,
                                        success=None,
                                        stats={'happy': 0, 'angry': 0, 'sad': 0, 'fear': 0, 'surprise': 0, 'disgust': 0,
                                               'neutral': 0})
@@ -82,7 +93,7 @@ def randomemotion():
             try:
                 tmpurl = flask.request.values['backendimage'].split(';')[1].split(',')[1]
             except:
-                return render_template("randomemotion.html", emotion=emotion, result=None, message=None, picname=None,
+                return render_template("randomemotion.html", emotion=emotion, result=None, message=None, picname=None, errormessage = None,
                                        success=None,
                                        stats={'happy': 0, 'angry': 0, 'sad': 0, 'fear': 0, 'surprise': 0, 'disgust': 0,
                                               'neutral': 0})
@@ -98,7 +109,14 @@ def randomemotion():
         try:
             results = emotionAnalysis(path, emotion, False)
         except:
-            results = emotionAnalysis(path, emotion, True)
+            try:
+                results = emotionAnalysis(path, emotion, True)
+            except:
+                errormsg = "Error: A face could not be identified in the provided image. Please use a different one."
+                return render_template("randomemotion.html", emotion=emotion, result=None, message=None, picname=None, errormessage = errormsg,
+                                success=None,
+                                stats={'happy': 0, 'angry': 0, 'sad': 0, 'fear': 0, 'surprise': 0, 'disgust': 0,
+                                       'neutral': 0})
         #results[3].write_image("static/starchart" + uid  +".png")
         size = 700, 700
         #chart = Image.open("static/starchart" + uid  + ".png")  # Convert image into 500x500
@@ -126,14 +144,15 @@ def randomemotion():
             result = "Oh no :("
             message = str(round(results[1],2)) + "%"
 
-        return render_template("randomemotion.html",emotion=emotion, result = results[2], message = message, picname = "/static/" + picname, success = results[0], stats = results[3])
+        return render_template("randomemotion.html",emotion=emotion, result = results[2], message = message, picname = "/static/" + picname, errormessage = None, success = results[0], stats = results[3])
     else:
         emotions = ['Anger', 'Sadness', 'Disgust', 'Happiness', 'Fear', 'Surprise']
         emotion = random.choice(emotions)
-        return render_template("randomemotion.html", emotion=emotion, result = None, message = None, picname = None, success = None, stats = {'happy': 0, 'angry': 0, 'sad' : 0, 'fear' : 0, 'surprise' : 0, 'disgust' :0 , 'neutral':0})
+        return render_template("randomemotion.html", emotion=emotion, result = None, message = None, picname = None, errormessage = None, success = None, stats = {'happy': 0, 'angry': 0, 'sad' : 0, 'fear' : 0, 'surprise' : 0, 'disgust' :0 , 'neutral':0})
 
 @app.route("/useremotion", methods=["POST", "GET"])
 def useremotion():
+    emotions = ['Anger', 'Sadness', 'Disgust', 'Happiness', 'Fear', 'Surprise']
     if request.method == "POST":
         uid = datetime.today().strftime("%x").replace('/', '-') + datetime.today().strftime("%X").replace(':', '-')
         emotion = request.form.get("emotion")
@@ -145,7 +164,7 @@ def useremotion():
             try:
                 tmpurl = flask.request.values['backendimage'].split(';')[1].split(',')[1]
             except:
-                return render_template("useremotion.html", emotion=emotion, result=None, message=None, picname=None,
+                return render_template("useremotion.html", emotions=emotions, emotion=emotion, result=None, message=None, picname=None,errormessage = None,
                                        success=None,
                                        stats={'happy': 0, 'angry': 0, 'sad': 0, 'fear': 0, 'surprise': 0, 'disgust': 0,
                                               'neutral': 0})
@@ -161,7 +180,15 @@ def useremotion():
         try:
             results = emotionAnalysis(path, emotion, False)
         except:
-            results = emotionAnalysis(path, emotion, True)
+            try:
+                results = emotionAnalysis(path, emotion, True)
+            except:
+                errormsg = "Error: A face could not be identified in the provided image. Please use a different one."
+                return render_template("useremotion.html", emotions=emotions, emotion=None, result=None, message=None,
+                                       picname=None, errormessage=errormsg, success=None,
+                                       stats={'happy': 0, 'angry': 0, 'sad': 0, 'fear': 0, 'surprise': 0, 'disgust': 0,
+                                              'neutral': 0})
+
         #results[3].write_image("static/starchart" + uid  + ".png")
         size = 700, 700
         #chart = Image.open("static/starchart" + uid  + ".png")  # Convert image into 500x500
@@ -184,11 +211,10 @@ def useremotion():
         else:
             result = "Oh no :("
             message = str(round(results[1],2)) + "%"
-        emotions = ['Anger', 'Sadness', 'Disgust', 'Happiness', 'Fear', 'Surprise']
-        return render_template("useremotion.html", emotions = emotions, emotion = emotion, result = results[2], message = message, picname = "/static/" + picname, success = results[0], stats = results[3])
+
+        return render_template("useremotion.html", emotions = emotions, emotion = emotion, result = results[2], message = message, picname = "/static/" + picname,errormessage = None, success = results[0], stats = results[3])
     else:
-        emotions = ['Anger', 'Sadness', 'Disgust', 'Happiness', 'Fear', 'Surprise']
-        return render_template("useremotion.html", emotions = emotions, emotion = None, result = None, message = None, picname = None, success = None, stats = {'happy': 0, 'angry': 0, 'sad' : 0, 'fear' : 0, 'surprise' : 0, 'disgust' :0 , 'neutral':0})
+        return render_template("useremotion.html", emotions = emotions, emotion = None, result = None, message = None, picname = None,errormessage = None, success = None, stats = {'happy': 0, 'angry': 0, 'sad' : 0, 'fear' : 0, 'surprise' : 0, 'disgust' :0 , 'neutral':0})
 
 if __name__ == "__main__":
     #app.debug = True
