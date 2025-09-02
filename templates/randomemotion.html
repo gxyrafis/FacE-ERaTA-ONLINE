@@ -11,6 +11,13 @@ Random Emotion Challenge
         </h1>
         <hr style="border-top: 2px solid #327fb3;">
     </div>
+    {% if errormessage != None %}
+        <div style="text-align: center;">
+            <h2 style="color: red; font-family: Yu Gothic UI; margin-bottom: -2vh;">
+                {{ errormessage }}
+            </h2>
+        </div>
+    {% endif %}
     <div style="display:flex; width: 90%; margin: auto; justify-content: safe center; margin-top: 5vh;">
         <div style="width: 22%;">
             <div style="width:100%; border: solid; border-width: 2px; border-color: #327fb3; height: fit-content; border-radius: 30px; padding: 0.5vh; padding-top: 1vh; padding-bottom: 6vh; text-align: center; font-size: 150%; font-family: Yu Gothic UI;">
@@ -28,15 +35,14 @@ Random Emotion Challenge
             </div>
         </div>
         <div style="width: 40%; border: solid; border-width: 2px; border-color: #327fb3; border-radius: 30px; margin-right: 3vw; margin-left: 3vw; min-height: 30vh; max-height: fit-content;">
-            {% if picname != None %}
-                <div id="photocontainerold" class="container-video" style="display: flex; justify-content: safe center; margin: auto; margin-top: 2vh;">
-                    <img id="photoold" name="photo" src="{{ picname }}" style="max-width: 500px; max-height: 375px;"/>
-                </div>
-            {% endif %}
             <form action="#" method="POST" enctype="multipart/form-data">
-                <div id="popupvideo" style="display: none; margin-auto; margin-top: 2vh; text-align: center;">
+                <div style="margin-auto; margin-top: 2vh; text-align: center;">
                     <div style="display: flex; justify-content: safe center; flex-wrap: wrap; margin: 0;">
-                        <div id="vidcontainer" class="container-video">
+                        <div id="photocontainerold" class="container-video" style="{% if picname != None %}display: flex; justify-content: safe center; margin: auto; margin-top: 2vh;{% else %} display: none; {% endif %}">
+                            <img id="photoold" name="photo" src="{{ picname }}" style="max-width: 500px; max-height: 375px;"/>
+                        </div>
+
+                        <div id="vidcontainer" class="container-video" style="{% if picname != None %}display:none;{% endif %}">
                             <video autoplay="true" id="videoElement">
                             </video>
                         </div>
@@ -45,7 +51,7 @@ Random Emotion Challenge
                         </div>
                     </div>
                     <canvas  id="myCanvas" style="display: none;"></canvas>
-                    <div style="text-align: center; margin-top: 3vh;">
+                    <div id="popupvideo" style="text-align: center; margin-top: 3vh;  display: none;">
                         <input id="picupload" style="display:none;" type="file" name="pic" id="pic">
                         <div style="display: flex; justify-content: safe center;">
                             <button id="buttontakepic" class="buttonsubmit" style="margin-right: 5vw;" type="button" onclick="snapshot()">Take Picture</button>
@@ -79,8 +85,8 @@ Random Emotion Challenge
                 </div>
                 <div style="width: 50%; vertical-align: middle; margin-top: auto; margin-bottom: auto;">
                     <div style="width: 100%; height: 1vh; background-color: grey; border-style: none; border-radius: 25px;">
-                        {% if result != None %}
-                        <div style="width: {{ stats['happy'] }}%; height: 1vh; background-color: yellow; border-style: solid; border-color: yellow; border-width: 1px; border-radius: 25px;">
+                        {% if result != None and stats['happy'] > 1 %}
+                        <div style="width: {{ stats['happy'] }}%; height: 1vh; background-color: yellow; border-style: none; border-color: yellow; border-width: 1px; border-radius: 25px;">
                         </div>
                         {% endif %}
                     </div>
@@ -92,8 +98,8 @@ Random Emotion Challenge
                 </div>
                 <div style="width: 50%; vertical-align: middle; margin-top: auto; margin-bottom: auto;">
                     <div style="width: 100%; height: 1vh; background-color: grey; border-style: none; border-radius: 25px;">
-                        {% if result != None %}
-                        <div style="width: {{ stats['sad'] }}%; height: 1vh; background-color: blue; border-style: solid; border-color: blue; border-width: 1px; border-radius: 25px;">
+                        {% if result != None and stats['sad'] > 1 %}
+                        <div style="width: {{ stats['sad'] }}%; height: 1vh; background-color: blue; border-style: none; border-color: blue; border-width: 1px; border-radius: 25px;">
                         </div>
                         {% endif %}
                     </div>
@@ -105,8 +111,8 @@ Random Emotion Challenge
                 </div>
                 <div style="width: 50%; vertical-align: middle; margin-top: auto; margin-bottom: auto;">
                     <div style="width: 100%; height: 1vh; background-color: grey; border-style: none; border-radius: 25px;">
-                        {% if result != None %}
-                        <div style="width: {{ stats['angry'] }}%; height: 1vh; background-color: red; border-style: solid; border-color: red; border-width: 1px; border-radius: 25px;">
+                        {% if result != None and stats['angry'] > 1 %}
+                        <div style="width: {{ stats['angry'] }}%; height: 1vh; background-color: red; border-style: none; border-color: red; border-width: 1px; border-radius: 25px;">
                         </div>
                         {% endif %}
                     </div>
@@ -118,8 +124,8 @@ Random Emotion Challenge
                 </div>
                 <div style="width: 50%; vertical-align: middle; margin-top: auto; margin-bottom: auto;">
                     <div style="width: 100%; height: 1vh; background-color: grey; border-style: none; border-radius: 25px;">
-                        {% if result != None %}
-                        <div style="width: {{ stats['surprise'] }}%; height: 1vh; background-color: orange; border-style: solid; border-color: orange; border-width: 1px; border-radius: 25px;">
+                        {% if result != None and stats['surprise'] > 1 %}
+                        <div style="width: {{ stats['surprise'] }}%; height: 1vh; background-color: orange; border-style: none; border-color: orange; border-width: 1px; border-radius: 25px;">
                         </div>
                         {% endif %}
                     </div>
@@ -131,8 +137,8 @@ Random Emotion Challenge
                 </div>
                 <div style="width: 50%; vertical-align: middle; margin-top: auto; margin-bottom: auto;">
                     <div style="width: 100%; height: 1vh; background-color: grey; border-style: none; border-radius: 25px;">
-                        {% if result != None %}
-                        <div style="width: {{ stats['fear'] }}%; height: 1vh; background-color: purple; border-style: solid; border-color: purple; border-width: 1px; border-radius: 25px;">
+                        {% if result != None and stats['fear'] > 1 %}
+                        <div style="width: {{ stats['fear'] }}%; height: 1vh; background-color: purple; border-style: none; border-color: purple; border-width: 1px; border-radius: 25px;">
                         </div>
                         {% endif %}
                     </div>
@@ -144,8 +150,8 @@ Random Emotion Challenge
                 </div>
                 <div style="width: 50%; vertical-align: middle; margin-top: auto; margin-bottom: auto;">
                     <div style="width: 100%; height: 1vh; background-color: grey; border-style: none; border-radius: 25px;">
-                        {% if result != None %}
-                        <div style="width: {{ stats['disgust'] }}%; height: 1vh; background-color: green; border-style: solid; border-color: green; border-width: 1px; border-radius: 25px;">
+                        {% if result != None and stats['disgust'] > 1 %}
+                        <div style="width: {{ stats['disgust'] }}%; height: 1vh; background-color: green; border-style: none; border-color: green; border-width: 1px; border-radius: 25px;">
                         </div>
                         {% endif %}
                     </div>
@@ -157,8 +163,8 @@ Random Emotion Challenge
                 </div>
                 <div style="width: 50%; vertical-align: middle; margin-top: auto; margin-bottom: auto;">
                     <div style="width: 100%; height: 1vh; background-color: grey; border-style: none; border-radius: 25px;">
-                        {% if result != None %}
-                        <div style="width: {{ stats['neutral'] }}%; height: 1vh; background-color: lightgrey; border-style: solid; border-color: lightgrey; border-width: 1px; border-radius: 25px;">
+                        {% if result != None and stats['neutral'] > 1 %}
+                        <div style="width: {{ stats['neutral'] }}%; height: 1vh; background-color: lightgrey; border-style: none; border-color: lightgrey; border-width: 1px; border-radius: 25px;">
                         </div>
                         {% endif %}
                     </div>
@@ -188,6 +194,7 @@ Random Emotion Challenge
 function openVid() {
 {% if picname != None %}
 document.getElementById("photocontainerold").style.display = "none";
+document.getElementById("vidcontainer").style.display = "block";
 {% endif %}
 document.getElementById("popupvideo").style.display = "block";
 
