@@ -32,7 +32,8 @@ def training():
             try:
                 tmpurl = flask.request.values['backendimage'].split(';')[1].split(',')[1]
             except:
-                return render_template("training.html", result=None, message=None, picname=None, errormessage = None,
+                errmsg = "Error: No picture was submitted. Please either upload or take a picture."
+                return render_template("training.html", result=None, message=None, picname=None, errormessage = errmsg,
                                        success=None,
                                        stats={'happy': 0, 'angry': 0, 'sad': 0, 'fear': 0, 'surprise': 0, 'disgust': 0,
                                               'neutral': 0})
@@ -93,7 +94,8 @@ def randomemotion():
             try:
                 tmpurl = flask.request.values['backendimage'].split(';')[1].split(',')[1]
             except:
-                return render_template("randomemotion.html", emotion=emotion, result=None, message=None, picname=None, errormessage = None,
+                errmsg = "Error: No picture was submitted. Please either upload or take a picture."
+                return render_template("randomemotion.html", emotion=emotion, result=None, message=None, picname=None, errormessage = errmsg,
                                        success=None,
                                        stats={'happy': 0, 'angry': 0, 'sad': 0, 'fear': 0, 'surprise': 0, 'disgust': 0,
                                               'neutral': 0})
@@ -164,7 +166,8 @@ def useremotion():
             try:
                 tmpurl = flask.request.values['backendimage'].split(';')[1].split(',')[1]
             except:
-                return render_template("useremotion.html", emotions=emotions, emotion=emotion, result=None, message=None, picname=None,errormessage = None,
+                errmsg = "Error: No picture was submitted. Please either upload or take a picture."
+                return render_template("useremotion.html", emotions=emotions, emotion=emotion, result=None, message=None, picname=None,errormessage = errmsg,
                                        success=None,
                                        stats={'happy': 0, 'angry': 0, 'sad': 0, 'fear': 0, 'surprise': 0, 'disgust': 0,
                                               'neutral': 0})
