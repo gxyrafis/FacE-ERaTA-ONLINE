@@ -4,12 +4,13 @@ import random
 from datetime import datetime
 
 import cv2
+import json
 import flask
 import numpy as np
 from flask import Flask, redirect, url_for, render_template, request, jsonify
 from PIL import Image
-import UtilityFunctions
 from UtilityFunctions import emotionAnalysis
+from UtilityFunctions import writeResultsJSONfile
 
 app = Flask(__name__)
 
@@ -39,9 +40,9 @@ def training():
                                               'neutral': 0})
             nparr = np.frombuffer(base64.b64decode(tmpurl), np.uint8)
             pic = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-            cv2.imwrite(os.getcwd() + "/static/" + "livepic" + uid + ".png", pic)
-            path = os.getcwd() + "/static/" + "livepic" + uid + ".png"
-            picname = "livepic" + uid + ".png"
+            cv2.imwrite(os.getcwd() + "/static/" + uid + ".png", pic)
+            path = os.getcwd() + "/static/" +uid + ".png"
+            picname = uid + ".png"
         else:
             pic.save(os.getcwd() + "/static/" + pic.filename)
             path = os.getcwd() + "/static/" + pic.filename
@@ -64,6 +65,7 @@ def training():
         #chart.thumbnail(size, Image.Resampling.LANCZOS)
         #chart.save("static/starchart" + uid + ".png")
 
+        writeResultsJSONfile(results[3], "static/" + uid)
         im = Image.open(path)
         im.thumbnail(size, Image.Resampling.LANCZOS)
         new_image_path = path
@@ -101,9 +103,9 @@ def randomemotion():
                                               'neutral': 0})
             nparr = np.frombuffer(base64.b64decode(tmpurl), np.uint8)
             pic = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-            cv2.imwrite(os.getcwd() + "/static/" + "livepic" + uid + ".png", pic)
-            path = os.getcwd() + "/static/" + "livepic" + uid + ".png"
-            picname = "livepic" + uid + ".png"
+            cv2.imwrite(os.getcwd() + "/static/" + uid + ".png", pic)
+            path = os.getcwd() + "/static/" + uid + ".png"
+            picname = uid + ".png"
         else:
             pic.save(os.getcwd() + "/static/" + pic.filename)
             path = os.getcwd() + "/static/" + pic.filename
@@ -124,6 +126,7 @@ def randomemotion():
         #chart = Image.open("static/starchart" + uid  + ".png")  # Convert image into 500x500
         #chart.thumbnail(size, Image.Resampling.LANCZOS)
         #chart.save("static/starchart" + uid  + ".png")
+        writeResultsJSONfile(results[3], "static/" + uid)
 
         for key in results[3].keys():
             x = str(results[3][key])
@@ -173,9 +176,9 @@ def useremotion():
                                               'neutral': 0})
             nparr = np.frombuffer(base64.b64decode(tmpurl), np.uint8)
             pic = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-            cv2.imwrite(os.getcwd() + "/static/" + "livepic" + uid + ".png", pic)
-            path = os.getcwd() + "/static/" + "livepic" + uid + ".png"
-            picname = "livepic" + uid + ".png"
+            cv2.imwrite(os.getcwd() + "/static/" + uid + ".png", pic)
+            path = os.getcwd() + "/static/" + uid + ".png"
+            picname = uid + ".png"
         else:
             pic.save(os.getcwd() + "/static/" + pic.filename)
             path = os.getcwd() + "/static/" + pic.filename
@@ -197,6 +200,7 @@ def useremotion():
         #chart = Image.open("static/starchart" + uid  + ".png")  # Convert image into 500x500
         #chart.thumbnail(size, Image.Resampling.LANCZOS)
         #chart.save("static/starchart" + uid + ".png")
+        writeResultsJSONfile(results[3], "static/" + uid)
 
         im = Image.open(path)
         im.thumbnail(size, Image.Resampling.LANCZOS)
