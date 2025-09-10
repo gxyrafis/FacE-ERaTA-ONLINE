@@ -6,6 +6,7 @@ import pandas as pd
 from cv2 import VideoCapture
 from deepface import DeepFace
 import plotly.express as px
+import json
 
 
 def emotionWordSwitch(emotion):
@@ -55,19 +56,10 @@ def emotionAnalysis(picture, emotion, retinaface):
     else:
         emotion = emotionWordSwitch(emotion)
     accuracy = emotion_analysis[0]["emotion"][emotion]
-    #fig = makeStarChart(emotion_analysis[0])
     if emotion_analysis[0]["dominant_emotion"] == emotion:
         return ["Success" , accuracy, emotionWordSwitchR(emotion_analysis[0]["dominant_emotion"]), emotion_analysis[0]["emotion"]]
     else:
         return ["Failure", accuracy, emotionWordSwitchR(emotion_analysis[0]["dominant_emotion"]), emotion_analysis[0]["emotion"]]
-
-def checkCamValidity(source):
-    cam = VideoCapture(source)
-    if cam is None or not cam.isOpened():
-        cam.release()
-        return False
-    cam.release()
-    return True
 
 def makeStarChart(emotion_analysis):
     anger_percentage = emotion_analysis["emotion"]["angry"]
@@ -85,3 +77,14 @@ def makeStarChart(emotion_analysis):
     fig = px.line_polar(df, r='r', theta='theta', line_close=True)
     fig.update_traces(fill='toself')
     return fig
+
+def writeResultsJSONfile(emotion_analysis, UID):
+    try:
+        jsonstring = ("{'happy': "+str(emotion_analysis["happy"])+", 'angry': "+str(emotion_analysis["angry"])+", 'sad': "+str(emotion_analysis["sad"])+
+                      ", 'fear': "+str(emotion_analysis["fear"])+", 'surprise': "+str(emotion_analysis["surprise"])+
+                      ", 'disgust': "+str(emotion_analysis["disgust"])+", 'neutral': "+str(emotion_analysis["neutral"])+"}")
+        with open(UID + ".json", "w") as f:
+            f.write(jsonstring)
+        return True
+    except:
+        return False
