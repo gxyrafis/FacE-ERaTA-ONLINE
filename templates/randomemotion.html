@@ -20,7 +20,7 @@ Random Emotion Challenge
     {% endif %}
     <div style="display:flex; width: 90%; margin: auto; justify-content: safe center; margin-top: 5vh;">
         <div style="width: 22%;">
-            <div style="width:100%; border: solid; border-width: 2px; border-color: #327fb3; height: fit-content; border-radius: 30px; padding: 0.5vh; padding-top: 1vh; padding-bottom: 6vh; text-align: center; font-size: 150%; font-family: Yu Gothic UI;">
+            <div style="width:100%; border: solid; border-width: 2px; border-color: #327fb3; height: fit-content; border-radius: 30px; padding-top: 1vh; padding-bottom: 6vh; text-align: center; font-size: 150%; font-family: Yu Gothic UI;">
                 <p style="margin-bottom: 1vh;">Try to portray:<br>{{ emotion }}</p>
                 <br>
                 <a class="buttonsubmit" href="{{ url_for('randomemotion') }}">Reload Emotion</a>
@@ -255,4 +255,5 @@ function init() {
 </script>
 </body>
 {% endblock %}
+
 
