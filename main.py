@@ -1,6 +1,7 @@
 import base64
 import os
 import random
+import uuid
 from datetime import datetime
 
 import cv2
@@ -24,7 +25,7 @@ def index():
 @app.route("/training", methods=["POST", "GET"])
 def training():
     if request.method == "POST":
-        uid = datetime.today().strftime("%x").replace('/','-') + datetime.today().strftime("%X").replace(':','-')
+        uid = str(uuid.uuid4())
         path = None
         picname = None
         pic = flask.request.files['pic']
@@ -65,7 +66,7 @@ def training():
         #chart.thumbnail(size, Image.Resampling.LANCZOS)
         #chart.save("static/starchart" + uid + ".png")
 
-        writeResultsJSONfile(results[3], "static/" + uid)
+        writeResultsJSONfile(results[3], "static/" + picname)
         im = Image.open(path)
         im.thumbnail(size, Image.Resampling.LANCZOS)
         new_image_path = path
@@ -75,6 +76,7 @@ def training():
             picname = picname.replace(".jpg", ".png").replace(".jpeg", ".png").replace(".JPG", ".png").replace(
                 ".JPEG", ".png")
             im.save(new_image_path)
+            os.remove(path)
         message = str(round(results[1], 2)) + "%"
         return render_template("training.html",result = results[2], message = message, picname = "/static/" + picname, errormessage=None, success = results[0], stats = results[3])
     else:
@@ -86,7 +88,7 @@ def training():
 @app.route("/random", methods=["POST", "GET"])
 def randomemotion():
     if request.method == "POST":
-        uid = datetime.today().strftime("%x").replace('/', '-') + datetime.today().strftime("%X").replace(':', '-')
+        uid = str(uuid.uuid4())
         emotion = request.form.get("emotioninput")
         path = None
         picname = None
@@ -126,7 +128,7 @@ def randomemotion():
         #chart = Image.open("static/starchart" + uid  + ".png")  # Convert image into 500x500
         #chart.thumbnail(size, Image.Resampling.LANCZOS)
         #chart.save("static/starchart" + uid  + ".png")
-        writeResultsJSONfile(results[3], "static/" + uid)
+        writeResultsJSONfile(results[3], "static/" + picname)
 
         for key in results[3].keys():
             x = str(results[3][key])
@@ -141,6 +143,7 @@ def randomemotion():
             picname = picname.replace(".jpg", ".png").replace(".jpeg", ".png").replace(".JPG", ".png").replace(
                 ".JPEG", ".png")
             im.save(new_image_path)
+            os.remove(path)
 
         if results[0] == "Success":
             result = "Good job!"
@@ -159,7 +162,7 @@ def randomemotion():
 def useremotion():
     emotions = ['Anger', 'Sadness', 'Disgust', 'Happiness', 'Fear', 'Surprise']
     if request.method == "POST":
-        uid = datetime.today().strftime("%x").replace('/', '-') + datetime.today().strftime("%X").replace(':', '-')
+        uid = str(uuid.uuid4())
         emotion = request.form.get("emotion")
         path = None
         picname = None
@@ -200,7 +203,7 @@ def useremotion():
         #chart = Image.open("static/starchart" + uid  + ".png")  # Convert image into 500x500
         #chart.thumbnail(size, Image.Resampling.LANCZOS)
         #chart.save("static/starchart" + uid + ".png")
-        writeResultsJSONfile(results[3], "static/" + uid)
+        writeResultsJSONfile(results[3], "static/" + picname)
 
         im = Image.open(path)
         im.thumbnail(size, Image.Resampling.LANCZOS)
@@ -211,6 +214,7 @@ def useremotion():
             picname = picname.replace(".jpg", ".png").replace(".jpeg", ".png").replace(".JPG", ".png").replace(
                 ".JPEG", ".png")
             im.save(new_image_path)
+            os.remove(path)
 
         if results[0] == "Success":
             result = "Good job!"

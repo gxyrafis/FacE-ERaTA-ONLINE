@@ -5,7 +5,6 @@ import numpy as np
 import pandas as pd
 from cv2 import VideoCapture
 from deepface import DeepFace
-import plotly.express as px
 import json
 
 
@@ -60,23 +59,6 @@ def emotionAnalysis(picture, emotion, retinaface):
         return ["Success" , accuracy, emotionWordSwitchR(emotion_analysis[0]["dominant_emotion"]), emotion_analysis[0]["emotion"]]
     else:
         return ["Failure", accuracy, emotionWordSwitchR(emotion_analysis[0]["dominant_emotion"]), emotion_analysis[0]["emotion"]]
-
-def makeStarChart(emotion_analysis):
-    anger_percentage = emotion_analysis["emotion"]["angry"]
-    sadness_percentage = emotion_analysis["emotion"]["sad"]
-    disgust_percentage = emotion_analysis["emotion"]["disgust"]
-    fear_percentage = emotion_analysis["emotion"]["fear"]
-    happiness_percentage = emotion_analysis["emotion"]["happy"]
-    surprise_percentage = emotion_analysis["emotion"]["surprise"]
-    neutral_percentage = emotion_analysis["emotion"]["neutral"]
-
-    df = pd.DataFrame(dict(
-        r = [happiness_percentage, anger_percentage, sadness_percentage, fear_percentage, surprise_percentage, disgust_percentage, neutral_percentage],
-        theta= ["Happiness", "Anger", "Sadness", "Fear", "Surprise", "Disgust", "Neutral"]
-    ))
-    fig = px.line_polar(df, r='r', theta='theta', line_close=True)
-    fig.update_traces(fill='toself')
-    return fig
 
 def writeResultsJSONfile(emotion_analysis, UID):
     try:
