@@ -68,6 +68,11 @@ Training Mode
                         <input type="hidden" name="backendimage" id="backendimage">
                     </div>
                 </div>
+                <div id="errmsg" style="text-align: center; display: none; margin-bottom: -4%;">
+                    <h3 style="color: red; font-family: Yu Gothic UI; margin: 0;">
+                        Error: No Camera Detected
+                    </h3>
+                </div>
                 <div style="display:flex; justify-content: safe center; flex-wrap: wrap; margin-top: {% if picname == None  %}10%{% else %} 3vh {% endif %};" id="initialdiv">
                     <p style="padding-left: 1vw; padding-right: 1vw;"></p>
                     <button class="buttonsubmit" type="button" id="opencambutton" onclick="openVid()">Open Camera</button>
@@ -190,24 +195,26 @@ Training Mode
     var video;
     let photo = null;
     let photobackend = null;
-function openVid() {
-{% if picname != None %}
-document.getElementById("photocontainerold").style.display = "none";
-document.getElementById("vidcontainer").style.display = "block";
-{% endif %}
-document.getElementById("popupvideo").style.display = "block";
 
-    video = document.querySelector("#videoElement");
-    document.getElementById("opencambutton").style.display = "none";
-    document.getElementById("initialdiv").style.display = "none";
-    document.getElementById("upload1").style.display = "none";
+function openVid() {
+    {% if picname != None %}
+    document.getElementById("photocontainerold").style.display = "none";
+    document.getElementById("vidcontainer").style.display = "block";
+    {% endif %}
     if (navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: true })
         .then(function (stream) {
-          video.srcObject = stream;
+            document.getElementById("popupvideo").style.display = "block";
+
+            video = document.querySelector("#videoElement");
+            document.getElementById("opencambutton").style.display = "none";
+            document.getElementById("initialdiv").style.display = "none";
+            document.getElementById("upload1").style.display = "none";
+            document.getElementById("errmsg").style.display = "none";
+            video.srcObject = stream;
         })
         .catch(function (err0r) {
-          console.log("Something went wrong!");
+          document.getElementById("errmsg").style.display = "block";
         });
     }
 }
