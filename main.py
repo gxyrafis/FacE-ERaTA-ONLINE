@@ -29,6 +29,7 @@ def training():
         path = None
         picname = None
         pic = flask.request.files['pic']
+        retinaface = False
         if pic.filename == "":
             tmpurl = ""
             try:
@@ -53,6 +54,7 @@ def training():
         except:
             try:
                 results = emotionAnalysis(path, "T", True)
+                retinaface = True
             except:
                 errormsg = "Error: A face could not be identified in the provided image. Please use a different one."
                 return render_template("training.html", result=None, message=None, picname=None, errormessage = errormsg,
@@ -66,7 +68,7 @@ def training():
         #chart.thumbnail(size, Image.Resampling.LANCZOS)
         #chart.save("static/starchart" + uid + ".png")
 
-        writeResultsJSONfile(results[3], "static/" + picname)
+        writeResultsJSONfile(results[3], "static/" + picname, retinaface)
         im = Image.open(path)
         im.thumbnail(size, Image.Resampling.LANCZOS)
         new_image_path = path
@@ -93,6 +95,7 @@ def randomemotion():
         path = None
         picname = None
         pic = flask.request.files['pic']
+        retinaface = False
         if pic.filename == "":
             tmpurl = ""
             try:
@@ -117,6 +120,7 @@ def randomemotion():
         except:
             try:
                 results = emotionAnalysis(path, emotion, True)
+                retinaface = True
             except:
                 errormsg = "Error: A face could not be identified in the provided image. Please use a different one."
                 return render_template("randomemotion.html", emotion=emotion, result=None, message=None, picname=None, errormessage = errormsg,
@@ -128,7 +132,7 @@ def randomemotion():
         #chart = Image.open("static/starchart" + uid  + ".png")  # Convert image into 500x500
         #chart.thumbnail(size, Image.Resampling.LANCZOS)
         #chart.save("static/starchart" + uid  + ".png")
-        writeResultsJSONfile(results[3], "static/" + picname)
+        writeResultsJSONfile(results[3], "static/" + picname, retinaface)
 
         for key in results[3].keys():
             x = str(results[3][key])
@@ -167,6 +171,7 @@ def useremotion():
         path = None
         picname = None
         pic = flask.request.files['pic']
+        retinaface = False
         if pic.filename == "":
             tmpurl = ""
             try:
@@ -191,6 +196,7 @@ def useremotion():
         except:
             try:
                 results = emotionAnalysis(path, emotion, True)
+                retinaface = True
             except:
                 errormsg = "Error: A face could not be identified in the provided image. Please use a different one."
                 return render_template("useremotion.html", emotions=emotions, emotion=None, result=None, message=None,
@@ -203,7 +209,7 @@ def useremotion():
         #chart = Image.open("static/starchart" + uid  + ".png")  # Convert image into 500x500
         #chart.thumbnail(size, Image.Resampling.LANCZOS)
         #chart.save("static/starchart" + uid + ".png")
-        writeResultsJSONfile(results[3], "static/" + picname)
+        writeResultsJSONfile(results[3], "static/" + picname, retinaface)
 
         im = Image.open(path)
         im.thumbnail(size, Image.Resampling.LANCZOS)

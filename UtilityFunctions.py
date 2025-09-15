@@ -60,11 +60,12 @@ def emotionAnalysis(picture, emotion, retinaface):
     else:
         return ["Failure", accuracy, emotionWordSwitchR(emotion_analysis[0]["dominant_emotion"]), emotion_analysis[0]["emotion"]]
 
-def writeResultsJSONfile(emotion_analysis, UID):
+def writeResultsJSONfile(emotion_analysis, UID, retinaface):
     try:
+        method = "OpenCV" if retinaface == False else "RetinaFace"
         jsonstring = ("{'happy': "+str(emotion_analysis["happy"])+", 'angry': "+str(emotion_analysis["angry"])+", 'sad': "+str(emotion_analysis["sad"])+
                       ", 'fear': "+str(emotion_analysis["fear"])+", 'surprise': "+str(emotion_analysis["surprise"])+
-                      ", 'disgust': "+str(emotion_analysis["disgust"])+", 'neutral': "+str(emotion_analysis["neutral"])+"}")
+                      ", 'disgust': "+str(emotion_analysis["disgust"])+", 'neutral': "+str(emotion_analysis["neutral"])+", 'method': " + method + "}")
         with open(UID + ".json", "w") as f:
             f.write(jsonstring)
         return True
