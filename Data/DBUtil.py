@@ -11,3 +11,19 @@ def insertAttempt(connection_string, attempt):
     )
 
     conn.commit()
+
+def executeSelectQuery(connection_string, query):
+    if("INSERT" in query.upper() or "UPDATE" in query.upper() or "DELETE" in query.upper() ):
+        return False
+
+    conn = pyodbc.connect(connection_string)
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute(query)
+        conn.commit()
+
+        return True
+    except Exception as e:
+        print(e)
+        return False
