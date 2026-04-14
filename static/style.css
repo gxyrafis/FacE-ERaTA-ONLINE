@@ -77,3 +77,29 @@ nav {
 	height: 375px;
 	background-color: #666;
 }
+
+.chatbot-icon-container{
+    border-radius: 50%;
+    right: 20px;
+    bottom: 20px;
+    position: fixed;
+    z-index: 1000;
+}
+
+.chatbot-icon{
+    cursor: pointer;
+    max-width: 15vw;
+    max-height: 15vh;
+}
+
+.chatbot-chatbox{
+    width: 350px;
+    height: 500px;
+    border: black 1px solid;
+    border-radius: 20px;
+    background-color: antiquewhite;
+    bottom: 40px;
+    right: 20px;
+    position: fixed;
+    z-index: 999;
+}

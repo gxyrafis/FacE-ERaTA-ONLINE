@@ -2,7 +2,7 @@ import base64
 import os
 import random
 import uuid
-from datetime import datetime
+import datetime
 
 import cv2
 import json
@@ -10,6 +10,9 @@ import flask
 import numpy as np
 from flask import Flask, redirect, url_for, render_template, request, jsonify
 from PIL import Image
+
+from Data.DBUtil import insertAttempt
+from Data.Models import Attempts
 from UtilityFunctions import emotionAnalysis
 from UtilityFunctions import writeResultsJSONfile
 
@@ -17,6 +20,13 @@ app = Flask(__name__)
 
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 app.config['MAX_FORM_MEMORY_SIZE'] = 50 * 1024 * 1024
+conn_string = (
+    r"Driver={ODBC Driver 18 for SQL Server};"
+    r"Server=localhost\SQLEXPRESS02;"
+    r"Database=FaceErataDB;"
+    r"Trusted_Connection=yes;"
+    r"TrustServerCertificate=yes;"
+)
 
 @app.route("/", methods=["POST", "GET"])
 def index():
@@ -80,6 +90,9 @@ def training():
             im.save(new_image_path)
             os.remove(path)
         message = str(round(results[1], 2)) + "%"
+        attempt = Attempts(id=None, result=None, percentage=message, emotion_detected=results[2],
+                           target_emotion=None, img=picname, date=datetime.datetime.now())
+        insertAttempt(conn_string, attempt)
         return render_template("training.html",result = results[2], message = message, picname = "/static/" + picname, errormessage=None, success = results[0], stats = results[3])
     else:
         return render_template("training.html", result=None, message=None, picname=None, errormessage = None,
@@ -148,14 +161,17 @@ def randomemotion():
                 ".JPEG", ".png")
             im.save(new_image_path)
             os.remove(path)
-
+        att_res = True
         if results[0] == "Success":
             result = "Good job!"
             message = str(round(results[1],2)) + "%"
         else:
+            att_res = False
             result = "Oh no :("
             message = str(round(results[1],2)) + "%"
 
+        attempt = Attempts(id=None, result= att_res, percentage= message, emotion_detected= results[2], target_emotion= emotion, img= picname, date= datetime.datetime.now())
+        insertAttempt(conn_string, attempt)
         return render_template("randomemotion.html",emotion=emotion, result = results[2], message = message, picname = "/static/" + picname, errormessage = None, success = results[0], stats = results[3])
     else:
         emotions = ['Anger', 'Sadness', 'Disgust', 'Happiness', 'Fear', 'Surprise']
@@ -221,14 +237,18 @@ def useremotion():
                 ".JPEG", ".png")
             im.save(new_image_path)
             os.remove(path)
-
+        att_res = True
         if results[0] == "Success":
             result = "Good job!"
             message = str(round(results[1],2)) + "%"
         else:
+            att_res = False
             result = "Oh no :("
             message = str(round(results[1],2)) + "%"
 
+        attempt = Attempts(id=None, result=att_res, percentage=message, emotion_detected=results[2],
+                           target_emotion=emotion, img=picname, date=datetime.datetime.now())
+        insertAttempt(conn_string, attempt)
         return render_template("useremotion.html", emotions = emotions, emotion = emotion, result = results[2], message = message, picname = "/static/" + picname,errormessage = None, success = results[0], stats = results[3])
     else:
         return render_template("useremotion.html", emotions = emotions, emotion = None, result = None, message = None, picname = None,errormessage = None, success = None, stats = {'happy': 0, 'angry': 0, 'sad' : 0, 'fear' : 0, 'surprise' : 0, 'disgust' :0 , 'neutral':0})
