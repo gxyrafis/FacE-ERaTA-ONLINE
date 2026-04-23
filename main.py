@@ -11,7 +11,7 @@ import numpy as np
 from flask import Flask, redirect, url_for, render_template, request, jsonify
 from PIL import Image
 
-from Data.DBUtil import insertAttempt
+from Data.DBUtil import insertAttempt, executeSelectQuery
 from Data.Models import Attempts
 from UtilityFunctions import emotionAnalysis
 from UtilityFunctions import writeResultsJSONfile
@@ -252,6 +252,13 @@ def useremotion():
         return render_template("useremotion.html", emotions = emotions, emotion = emotion, result = results[2], message = message, picname = "/static/" + picname,errormessage = None, success = results[0], stats = results[3])
     else:
         return render_template("useremotion.html", emotions = emotions, emotion = None, result = None, message = None, picname = None,errormessage = None, success = None, stats = {'happy': 0, 'angry': 0, 'sad' : 0, 'fear' : 0, 'surprise' : 0, 'disgust' :0 , 'neutral':0})
+
+@app.route("/chatbotRequest", methods=["POST"])
+def chatbotRequest():
+    data = request.get_json()
+    resp = executeSelectQuery(conn_string ,data.get("query"))
+
+    return resp
 
 if __name__ == "__main__":
     #app.debug = True
