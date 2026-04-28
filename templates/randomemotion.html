@@ -3,7 +3,6 @@
 Random Emotion Challenge
 {% endblock %}
 {% block body %}
-<body onload="init();">
     <div style="text-align: center;">
         <!--<h1 style="margin: 0px; margin-bottom: 2vh; margin-top: 1vh; color: #fff; text-shadow: 1px 1px 0 #327fb3,-1px 1px 0 #327fb3,-1px -1px 0 #327fb3,1px -1px 0 #327fb3; font-family: Yu Gothic UI; font-size: 400%; -webkit-font-smoothing: antialiased;">-->
         <h1 style="margin: 0px; margin-bottom: 2vh; margin-top: 1vh; font-family: Yu Gothic UI; font-size: 400%;  background-image: linear-gradient(to right, #b0e0e6, #4682b4, #b0e0e6); color: transparent; background-clip: text;">
@@ -196,6 +195,11 @@ Random Emotion Challenge
     var video;
     let photo = null;
     let photobackend = null;
+
+    document.addEventListener("DOMContentLoaded", function() {
+        init();
+    });
+
 function openVid() {
     {% if picname != None %}
     document.getElementById("photocontainerold").style.display = "none";
@@ -259,7 +263,6 @@ function init() {
 
 
 </script>
-</body>
 {% endblock %}
 
 

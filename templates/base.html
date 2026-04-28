@@ -2,9 +2,19 @@
 
 <html>
 <head>
-    <title>{% block title %} {% endblock %}</title>
+     <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
     {% block head %} {% endblock %}
+
+    <style>
+      #dify-chatbot-bubble-button {
+        background-color: #1C64F2 !important;
+      }
+      #dify-chatbot-bubble-window {
+        width: 24rem !important;
+        height: 40rem !important;
+      }
+    </style>
 </head>
 <body>
     <header style="display: flex; justify-content: space-around;">
@@ -18,15 +28,31 @@
         <div style="width: 20%;">&nbsp;</div>
     </header>
     {% block body %} {% endblock %}
-	
-	<!--<div class="chatbot-icon-container">
-        <img class="chatbot-icon" src="../static/images/chatbot.png">
-    </div>
+    <div></div>
 
-    <div class="chatbot-chatbox">
-
-    </div>-->
-	
-	<div></div>
+<script>
+ window.difyChatbotConfig = {
+  token: 'iFctsgHGLDqoWUyq',
+  inputs: {
+    // You can define the inputs from the Start node here
+    // key is the variable name
+    // e.g.
+    // name: "NAME"
+  },
+  systemVariables: {
+    // user_id: 'YOU CAN DEFINE USER ID HERE',
+    // conversation_id: 'YOU CAN DEFINE CONVERSATION ID HERE, IT MUST BE A VALID UUID',
+  },
+  userVariables: {
+    // avatar_url: 'YOU CAN DEFINE USER AVATAR URL HERE',
+    // name: 'YOU CAN DEFINE USER NAME HERE',
+  },
+ }
+</script>
+<script
+ src="https://udify.app/embed.min.js"
+ id="iFctsgHGLDqoWUyq"
+ defer>
+</script>
 </body>
 </html>
