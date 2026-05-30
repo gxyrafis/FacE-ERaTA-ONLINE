@@ -3,29 +3,32 @@
 <html>
 <head>
      <title>{% block title %} {% endblock %}</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     {% block head %} {% endblock %}
 
-    <style>
-      #dify-chatbot-bubble-button {
-        background-color: #1C64F2 !important;
-      }
-      #dify-chatbot-bubble-window {
-        width: 24rem !important;
-        height: 40rem !important;
-      }
-    </style>
 </head>
 <body>
-    <header style="display: flex; justify-content: space-around;">
+    <header>
         <div style="font-size: 5vh; color: #e6e6e6; text-align: left; vertical-align: middle; margin-top: auto; margin-bottom: auto; margin-right: 4vw;"><a style="text-decoration: none; color: white;" href="{{ url_for('index') }}">FacE-ERaTA <i>ONLINE</i></a></div>
-        <nav>
+        <nav class="navbox">
             <a class="navbutton" href="{{ url_for('index') }}">Home</a>
             <a class="navbutton" href="{{ url_for('randomemotion') }}">Random Emotion</a>
             <a class="navbutton" href="{{ url_for('useremotion') }}">User Picked Emotion</a>
             <a class="navbutton" href="{{ url_for('training') }}">Training</a>
         </nav>
-        <div style="width: 20%;">&nbsp;</div>
+        <a href="javascript:void(0);" id="mobilemenubutton" class="navmenuicon navbutton" style="margin-top: auto; margin-bottom: auto;" onclick="menuResponsive()">
+            <i class="fa fa-bars" style="pointer-events: none;"></i>
+        </a>
+        <nav id="mobilemenunav" style="display: none; position: absolute; z-index: 999; background-color: var(--backgroundcol); margin-top: 0; top: 0; right: 0; border: 1px solid white; border-top: none; border-right: none;">
+            <a class="navbutton" href="{{ url_for('index') }}">Home</a>
+            <a class="navbutton" href="{{ url_for('randomemotion') }}">Random Emotion</a>
+            <a class="navbutton" href="{{ url_for('useremotion') }}">User Picked Emotion</a>
+            <a class="navbutton" href="{{ url_for('training') }}">Training</a>
+        </nav>
+        <div style="width: 20%;" class="navbox">&nbsp;</div>
     </header>
     {% block body %} {% endblock %}
     <div></div>
@@ -53,6 +56,21 @@
  src="https://udify.app/embed.min.js"
  id="iFctsgHGLDqoWUyq"
  defer>
+</script>
+
+<script>
+    document.addEventListener('click', e => {
+        let mobilemenu = document.getElementById('mobilemenunav');
+        let button = document.getElementById('mobilemenubutton');
+        if(!mobilemenu.contains(e.target) && e.target !== button){
+            mobilemenu.style.display = 'none';
+        }
+    })
+
+    function menuResponsive(){
+        let mobilemenu = document.getElementById('mobilemenunav');
+        mobilemenu.style.display = 'grid';
+    }
 </script>
 </body>
 </html>

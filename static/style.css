@@ -78,28 +78,63 @@ nav {
 	background-color: #666;
 }
 
-.chatbot-icon-container{
-    border-radius: 50%;
-    right: 20px;
-    bottom: 20px;
-    position: fixed;
-    z-index: 1000;
+@media screen and (max-width: 962px){
+    .navbox{
+        display: none;
+    }
+    .navmenuicon{
+        display: block;
+    }
+
+    header{
+        display: flex;
+        justify-content: space-around;
+        position: sticky;
+        top: 0;
+    }
+
+    .indextext{
+        width: 90%;
+        padding: 2%;
+        font-size: 3vh;
+        margin-left: auto;
+        margin-right:auto;
+        margin-top: 6%;
+        text-align: center;
+        font-family: Yu Gothic UI;
+        border-style: solid;
+        border-width: 3px;
+        border-radius: 25px;
+        border-color: #327fb3;
+    }
 }
 
-.chatbot-icon{
-    cursor: pointer;
-    max-width: 15vw;
-    max-height: 15vh;
-}
+@media screen and (min-width: 963px){
+    .navbox{
+        display: inherit;
+    }
 
-.chatbot-chatbox{
-    width: 350px;
-    height: 500px;
-    border: black 1px solid;
-    border-radius: 20px;
-    background-color: antiquewhite;
-    bottom: 40px;
-    right: 20px;
-    position: fixed;
-    z-index: 999;
+    .navmenuicon{
+        display: none;
+    }
+
+    header{
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .indextext{
+        width: 50%;
+        padding: 2%;
+        font-size: 3vh;
+        margin-left: auto;
+        margin-right:auto;
+        margin-top: 6%;
+        text-align: center;
+        font-family: Yu Gothic UI;
+        border-style: solid;
+        border-width: 3px;
+        border-radius: 25px;
+        border-color: #327fb3;
+    }
 }
