@@ -65,19 +65,6 @@ nav {
     text-transform:none;
 }
 
-.container-video {
-	margin: 0;
-	width: 500px;
-	height: 375px;
-	border: 10px #333 solid;
-}
-
-#videoElement {
-	width: 500px;
-	height: 375px;
-	background-color: #666;
-}
-
 @media screen and (max-width: 962px){
     .navbox{
         display: none;
@@ -106,6 +93,74 @@ nav {
         border-width: 3px;
         border-radius: 25px;
         border-color: #327fb3;
+    }
+
+    .container-video {
+        margin: 0;
+        width: 90%;
+        height: auto;
+        min-height: 50vh;
+        border: 10px #333 solid;
+    }
+
+    #videoElement {
+        width: 100%;
+        height: 100%;
+        background-color: #666;
+    }
+
+    .gamemodeTitle{
+        margin: 0px;
+        margin-bottom: 2vh;
+        margin-top: 1vh;
+        font-family: Yu Gothic UI;
+        font-size: 200%;
+        background-image: linear-gradient(to right, #b0e0e6, #4682b4, #b0e0e6);
+        color: transparent;
+        background-clip: text;
+    }
+
+    .mainContainer{
+        width: 90%;
+        margin: auto;
+        text-align: center;
+        margin-top: 5vh;
+    }
+
+    .instructionsOptionsBlockBasic{
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .OptionsBlockBasic{
+        width:100%;
+        height: fit-content;
+        border-radius: 0px;
+        padding-bottom: 2vh;
+        text-align: center;
+        font-size: 150%;
+        font-family: Yu Gothic UI;
+    }
+
+    .instructionsBlockBasic{
+        display: none;
+    }
+
+    .MainContainerBasic{
+        width: 90%;
+        min-height: 30vh;
+        max-height: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .noMobile{
+        display: none;
+    }
+
+    .inBetweenSpacerBasic{
+        width: 2vw;
     }
 }
 
@@ -136,5 +191,82 @@ nav {
         border-width: 3px;
         border-radius: 25px;
         border-color: #327fb3;
+    }
+
+    .container-video {
+        margin: 0;
+        width: 90%;
+        height: auto;
+        min-height: 375px;
+        border: 10px #333 solid;
+    }
+
+    #videoElement {
+        width: 100%;
+        height: 100%;
+        background-color: #666;
+    }
+
+    .gamemodeTitle{
+        margin: 0px;
+        margin-bottom: 2vh;
+        margin-top: 1vh;
+        font-family: Yu Gothic UI;
+        font-size: 400%;
+        background-image: linear-gradient(to right, #b0e0e6, #4682b4, #b0e0e6);
+        color: transparent;
+        background-clip: text;
+    }
+
+    .mainContainer{
+        display:flex;
+        width: 90%;
+        margin: auto;
+        justify-content: safe center;
+        margin-top: 5vh;
+    }
+
+    .instructionsOptionsBlockBasic{
+        width: 22%;
+    }
+
+    .OptionsBlockBasic{
+        width:100%;
+        border: solid;
+        border-width: 2px;
+        border-color: #327fb3;
+        height: fit-content;
+        border-radius: 30px;
+        padding-top: 1vh;
+        padding-bottom: 6vh;
+        text-align: center;
+        font-size: 150%;
+        font-family: Yu Gothic UI;
+    }
+
+    .instructionsBlockBasic{
+        width:100%;
+        border: solid;
+        border-width: 2px;
+        border-color: #327fb3;
+        border-radius: 30px;
+        min-height: 40vh;
+        max-height: fit-content;
+    }
+
+    .MainContainerBasic{
+        width: 40%;
+        border: solid;
+        border-width: 2px;
+        border-color: #327fb3;
+        border-radius: 30px;
+        margin-right: 3vw;
+        margin-left: 3vw;
+        min-height: 30vh;
+        max-height: fit-content;
+    }
+
+    .inBetweenSpacerBasic{
+        width: 5vw;
     }
 }
