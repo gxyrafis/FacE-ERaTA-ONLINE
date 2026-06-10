@@ -162,6 +162,15 @@ nav {
     .inBetweenSpacerBasic{
         width: 2vw;
     }
+
+    .analysisResultsBlock{
+        width:90%;
+        min-height: 40vh;
+        max-height: fit-content;
+        padding-bottom: 2.5vh;
+        padding-top: 5vh;
+        margin: auto;
+    }
 }
 
 @media screen and (min-width: 963px){
@@ -268,5 +277,16 @@ nav {
 
     .inBetweenSpacerBasic{
         width: 5vw;
+    }
+
+    .analysisResultsBlock{
+        width:33%;
+        border: solid;
+        border-width: 2px;
+        border-color: #327fb3;
+        border-radius: 30px;
+        min-height: 40vh;
+        max-height: fit-content;
+        padding-bottom: 2.5vh;
     }
 }

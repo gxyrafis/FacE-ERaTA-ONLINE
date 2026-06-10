@@ -96,7 +96,7 @@ Random Emotion Challenge
         --------------------BLOCK3
         -->
 
-        <div style="width:33%; border: solid; border-width: 2px; border-color: #327fb3; border-radius: 30px; min-height: 40vh; max-height: fit-content; padding-bottom: 2.5vh;">
+        <div class="analysisResultsBlock" id="resultsBlock">
             <p style="font-size: xx-large; font-family: Yu Gothic UI; text-align: center; margin: 0; margin-top: 0.5vh; margin-bottom: 1em;">Analysis Results</p>
             <div style="display: flex; margin: 1vh 3vw 1vh 3vw">
                 <div style="width: 50%">
@@ -215,6 +215,13 @@ Random Emotion Challenge
         init();
     });
 
+    {% if scroll_to_results %}
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("resultsBlock").scrollIntoView({ behavior: 'smooth' });
+        });
+    {% endif %}
+
+
 function openVid() {
     {% if picname != None %}
     document.getElementById("photocontainerold").style.display = "none";
@@ -245,13 +252,16 @@ function init() {
         // drawing in it
         canvas = document.getElementById("myCanvas");
         ctx = canvas.getContext('2d');
-        canvas.setAttribute("width", 500);
-        canvas.setAttribute("height", 375);
+        // canvas.setAttribute("width", 500);
+        // canvas.setAttribute("height", 375);
         photo = document.getElementById("photo");
       }
 
-          function snapshot() {
+      function snapshot() {
          // Draws current image from the video element into the canvas
+
+        canvas.setAttribute("width", video.videoWidth);
+        canvas.setAttribute("height", video.videoHeight);
         ctx.drawImage(video, 0,0, canvas.width, canvas.height);
         document.getElementById("photocontainer").style.display = "grid";
         document.getElementById("vidcontainer").style.display = "none";

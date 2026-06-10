@@ -93,7 +93,10 @@ def training():
         attempt = Attempts(id=None, result=None, percentage=message, emotion_detected=results[2],
                            target_emotion=None, img=picname, date=datetime.datetime.now())
         insertAttempt(conn_string, attempt)
-        return render_template("training.html",result = results[2], message = message, picname = "/static/" + picname, errormessage=None, success = results[0], stats = results[3])
+
+        is_mobile = any(x in request.user_agent.string.lower()
+                        for x in ['mobile', 'android', 'iphone', 'ipad'])
+        return render_template("training.html",result = results[2], message = message, picname = "/static/" + picname, errormessage=None, success = results[0], stats = results[3], scroll_to_results = is_mobile)
     else:
         return render_template("training.html", result=None, message=None, picname=None, errormessage = None,
                                        success=None,
@@ -172,7 +175,9 @@ def randomemotion():
 
         attempt = Attempts(id=None, result= att_res, percentage= message, emotion_detected= results[2], target_emotion= emotion, img= picname, date= datetime.datetime.now())
         insertAttempt(conn_string, attempt)
-        return render_template("randomemotion.html",emotion=emotion, result = results[2], message = message, picname = "/static/" + picname, errormessage = None, success = results[0], stats = results[3])
+        is_mobile = any(x in request.user_agent.string.lower()
+                        for x in ['mobile', 'android', 'iphone', 'ipad'])
+        return render_template("randomemotion.html",emotion=emotion, result = results[2], message = message, picname = "/static/" + picname, errormessage = None, success = results[0], stats = results[3], scroll_to_results = is_mobile)
     else:
         emotions = ['Anger', 'Sadness', 'Disgust', 'Happiness', 'Fear', 'Surprise']
         emotion = random.choice(emotions)
@@ -249,7 +254,9 @@ def useremotion():
         attempt = Attempts(id=None, result=att_res, percentage=message, emotion_detected=results[2],
                            target_emotion=emotion, img=picname, date=datetime.datetime.now())
         insertAttempt(conn_string, attempt)
-        return render_template("useremotion.html", emotions = emotions, emotion = emotion, result = results[2], message = message, picname = "/static/" + picname,errormessage = None, success = results[0], stats = results[3])
+        is_mobile = any(x in request.user_agent.string.lower()
+                        for x in ['mobile', 'android', 'iphone', 'ipad'])
+        return render_template("useremotion.html", emotions = emotions, emotion = emotion, result = results[2], message = message, picname = "/static/" + picname,errormessage = None, success = results[0], stats = results[3], scroll_to_results = is_mobile)
     else:
         return render_template("useremotion.html", emotions = emotions, emotion = None, result = None, message = None, picname = None,errormessage = None, success = None, stats = {'happy': 0, 'angry': 0, 'sad' : 0, 'fear' : 0, 'surprise' : 0, 'disgust' :0 , 'neutral':0})
 
